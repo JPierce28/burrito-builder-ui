@@ -6,7 +6,8 @@ class OrderForm extends Component {
     this.props = props;
     this.state = {
       name: '',
-      ingredients: []
+      ingredients: [],
+      error: true
     };
   }
 
@@ -22,13 +23,18 @@ class OrderForm extends Component {
   }
 
   handleSubmit = e => {
-    e.preventDefault();
-    this.clearInputs();
-    let newId = Date.now()
-    let newName = this.state.name
-    let ing = this.state.ingredients
-    let postObj = {id: newId, name: newName, ingredients: ing}
-    this.props.postOrder(postObj)
+    if(this.state.name === '' || this.state.ingredients.length === 0) {
+      return this.setState({error: true})
+    } else {
+      this.setState({error: false})
+      e.preventDefault();
+      this.clearInputs();
+      let newId = Date.now()
+      let newName = this.state.name
+      let ing = this.state.ingredients
+      let postObj = {id: newId, name: newName, ingredients: ing}
+      this.props.postOrder(postObj)
+    }
   }
 
   clearInputs = () => {
@@ -59,7 +65,6 @@ class OrderForm extends Component {
         { ingredientButtons }
 
         <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
-
         <button onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
