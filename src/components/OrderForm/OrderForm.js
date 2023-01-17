@@ -52,7 +52,7 @@ class OrderForm extends Component {
     });
 
     return (
-      <form>
+      <form className='form'>
         <input
           className='input-form'
           type='text'
@@ -64,7 +64,7 @@ class OrderForm extends Component {
 
         { ingredientButtons }
 
-        <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
+        <p className='selected-ing'>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
         <button onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
