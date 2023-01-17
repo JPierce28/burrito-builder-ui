@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class OrderForm extends Component {
-  constructor(props) {
+  constructor( props ) {
     super();
     this.props = props;
     this.state = {
@@ -10,10 +10,25 @@ class OrderForm extends Component {
     };
   }
 
+  handleIngredientChange = event => {
+    event.preventDefault()
+    console.log(event.target.name)
+    let newIng = event.target.name
+    this.setState({ingredients: [...this.state.ingredients, newIng]})
+  }
+
+  handleNameChange = e => {
+    this.setState({name: e.target.value})
+  }
 
   handleSubmit = e => {
     e.preventDefault();
     this.clearInputs();
+    let newId = Date.now()
+    let newName = this.state.name
+    let ing = this.state.ingredients
+    let postObj = {id: newId, name: newName, ingredients: ing}
+    this.props.postOrder(postObj)
   }
 
   clearInputs = () => {
@@ -24,7 +39,7 @@ class OrderForm extends Component {
     const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
     const ingredientButtons = possibleIngredients.map(ingredient => {
       return (
-        <button key={ingredient} name={ingredient} onClick={e => this.handleIngredientChange(e)}>
+        <button key={ingredient} name={ingredient} onClick={event => this.handleIngredientChange(event)}>
           {ingredient}
         </button>
       )
@@ -33,6 +48,7 @@ class OrderForm extends Component {
     return (
       <form>
         <input
+          className='input-form'
           type='text'
           placeholder='Name'
           name='name'

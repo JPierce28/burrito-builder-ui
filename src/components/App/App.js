@@ -19,13 +19,16 @@ class App extends Component {
     return allOrders 
   }
 
+  postOrder = newOrder => {
+    console.log(newOrder)
+  }
+
   render() {
-    console.log(this.state.orders)
     return (
       <main className="App">
         <header>
           <h1>Burrito Builder</h1>
-          <OrderForm />
+          <OrderForm postOrder={this.postOrder}/>
         </header>
         {this.state.orders.length === 0 && <h2>There are no orders</h2>}
         {this.state.orders.length !== 0 && <Orders orders={this.state.orders} />}
